@@ -1,7 +1,16 @@
+using Microsoft.EntityFrameworkCore;
+using System.Configuration;
+using TaskManager.Models;
+using TaskManager.Repositories;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+builder.Services.AddDbContext<TaskManagerContext>(options =>
+                options.UseSqlServer("Server=(localdb)\\mssqllocaldb;Database=TaskManager;Trusted_Connection=True"));
+
+builder.Services.AddTransient<ITaskRepository, TaskRepository>();
 
 var app = builder.Build();
 
